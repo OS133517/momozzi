@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE configuration 
+    PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<configuration> 
+	<!-- http://www.mybatis.org/mybatis-3/configuration.html#settings 참고 --> 
+	<settings> 
+		<!-- query 결과 컬럼의 값이 null일 경우 result에 null로 setting할지 여무 --> 
+		<setting name="callSettersOnNulls" value="true" /> 
+		<!-- null parameter 허용 --> 
+		<setting name="jdbcTypeForNull" value="NULL" /> 
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="RecipeDto" type="com.oh.momozzi.recipe.dto.RecipeDto"/>
+		<typeAlias alias="MemberDto" type="com.oh.momozzi.member.dto.MemberDto"/>
+<!--		<typeAlias alias="PurchaseDto" type="com.uni.reactpro.purchase.dto.PurchaseDto"/>-->
+<!--		<typeAlias alias="ReviewDto" type="com.uni.reactpro.review.dto.ReviewDto"/>-->
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="MemberMapper.xml" />
+<!--		<mapper resource="RecipeMapper.xml" />-->
+<!--		<mapper resource="ReviewMapper.xml" />-->
+<!--		<mapper resource="PurchaseMapper.xml" />-->
+	</mappers>
+</configuration>

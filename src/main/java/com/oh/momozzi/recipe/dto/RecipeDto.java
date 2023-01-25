@@ -10,7 +10,7 @@ public class RecipeDto {
     private String recipeNo;
     private String recipeName;
     private String memberName;
-    private String categoryCode;
+    private String categoryName;
     private String ingredients;
     private String recipeBody;
     private String viewNum;

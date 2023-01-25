@@ -6,6 +6,8 @@ import com.oh.momozzi.common.paging.ResponseDtoWithPaging;
 import com.oh.momozzi.common.paging.SelectCriteria;
 import com.oh.momozzi.recipe.dto.RecipeDto;
 import com.oh.momozzi.recipe.service.RecipeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
+@Api(tags = {"뭐먹지 스웨거 연동 테스트"})
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
 public class RecipeController {
+    // http://localhost:8090/swagger-ui/index.html
 
     private final RecipeService recipeService;
 
@@ -25,6 +29,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @ApiOperation(value = "페이징 처리한 레시피 목록 조회")
     @GetMapping("/recipes")
     public ResponseEntity<ResponseDto> selectRecipeListWithPaging(@RequestParam(name="offset", defaultValue="1") String offset) {
 
@@ -43,12 +48,14 @@ public class RecipeController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
     }
 
+    @ApiOperation(value = "레시피 상세 조회")
     @GetMapping("/recipes/{recipeNo}")
     public ResponseEntity<ResponseDto> selectRecipeDetail(@PathVariable String recipeNo) {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 상세정보 조회 성공",  recipeService.selectRecipe(recipeNo)));
     }
 
+    @ApiOperation(value = "레시피 등록")
     @PostMapping(value = "/recipes")
     public ResponseEntity<ResponseDto> insertRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
 
@@ -57,6 +64,7 @@ public class RecipeController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 입력 성공", recipeService.insertRecipe(recipeDto)));
     }
 
+    @ApiOperation(value = "레시피 관리자 추천")
     @PutMapping("/recipes-recommend/{recipeNo}")
     public ResponseEntity<ResponseDto> updateRecipeForRecommend(@PathVariable String recipeNo) {
 
@@ -64,6 +72,7 @@ public class RecipeController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 관리자 추천 성공", recipeService.updateRecipeForRecommend(recipeNo)));
     }
 
+    @ApiOperation(value = "레시피 수정")
     @PutMapping("/recipes")
     public ResponseEntity<ResponseDto> updateRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
 
@@ -73,6 +82,7 @@ public class RecipeController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 업데이트 성공",  recipeService.updateRecipe(recipeDto)));
     }
 
+    @ApiOperation(value = "레시피 삭제")
     @DeleteMapping("/recipes/{recipeNo}")
     public ResponseEntity<ResponseDto> deleteRecipe(@PathVariable String recipeNo) {
 

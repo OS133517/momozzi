@@ -6,6 +6,8 @@ import com.oh.momozzi.jwt.TokenProvider;
 import com.oh.momozzi.member.dao.MemberMapper;
 import com.oh.momozzi.member.dto.MemberDto;
 import com.oh.momozzi.member.dto.TokenDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

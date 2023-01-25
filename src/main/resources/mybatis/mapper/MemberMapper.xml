@@ -3,47 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oh.momozzi.member.dao.MemberMapper">
-    <select id="selectByMemberId" resultType="MemberDto">
+    <select id="selectByMemberId" parameterType="String" resultType="MemberDto">
         SELECT
-            MEMBER_CODE
-             ,  MEMBER_ID
-             ,  MEMBER_NAME
-             ,  MEMBER_PASSWORD
-             ,  MEMBER_ROLE
-             ,  MEMBER_EMAIL
+            MEMBER_CODE,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_PASSWORD,
+            MEMBER_ROLE,
+            MEMBER_EMAIL
         FROM TBL_MEMBER
         WHERE MEMBER_ID = #{ memberId }
     </select>
     <select id="selectByEmail" resultType="MemberDto">
         SELECT
-            MEMBER_CODE
-             ,  MEMBER_ID
-             ,  MEMBER_NAME
-             ,  MEMBER_PASSWORD
-             ,  MEMBER_ROLE
-             ,  MEMBER_EMAIL
+            MEMBER_CODE,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_PASSWORD,
+            MEMBER_ROLE,
+            MEMBER_EMAIL
         FROM TBL_MEMBER
         WHERE MEMBER_EMAIL = #{ email }
     </select>
     <select id="findByEmail" resultType="MemberDto">
         SELECT
-            MEMBER_CODE
-             ,  MEMBER_ID
-             ,  MEMBER_NAME
-             ,  MEMBER_PASSWORD
-             ,  MEMBER_ROLE
-             ,  MEMBER_EMAIL
+            MEMBER_CODE,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_PASSWORD,
+            MEMBER_ROLE,
+            MEMBER_EMAIL
         FROM TBL_MEMBER
         WHERE MEMBER_EMAIL = #{ email }
     </select>
     <select id="findByMemberId" resultType="MemberDto">
         SELECT
-            MEMBER_CODE
-             ,  MEMBER_ID
-             ,  MEMBER_NAME
-             ,  MEMBER_PASSWORD
-             ,  MEMBER_ROLE
-             ,  MEMBER_EMAIL
+            MEMBER_CODE,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_PASSWORD,
+            MEMBER_ROLE,
+            MEMBER_EMAIL
         FROM TBL_MEMBER
         WHERE MEMBER_ID = #{ memberId }
     </select>

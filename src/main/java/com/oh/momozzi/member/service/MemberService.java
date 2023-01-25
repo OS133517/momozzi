@@ -2,6 +2,7 @@ package com.oh.momozzi.member.service;
 
 import com.oh.momozzi.member.dao.MemberMapper;
 import com.oh.momozzi.member.dto.MemberDto;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,9 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
-    @GetMapping
-    public MemberDto selectMyInfo(@PathVariable String memberId) {
-        log.info("[MemberService] getMyInfo Start ==============================");
+    public MemberDto selectMyInfo(String memberId) {
 
+        log.info("[MemberService] getMyInfo Start ==============================");
         MemberDto member = memberMapper.selectByMemberId(memberId);
         log.info("[MemberService] {}", member);
         log.info("[MemberService] getMyInfo End ==============================");

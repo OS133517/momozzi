@@ -12,37 +12,87 @@
         SELECT
             TR.RECIPE_NO,
             TR.RECIPE_NAME,
+            TR.MEMBER_CODE,
             TM.MEMBER_NAME,
+            TR.CATEGORY_NO,
             TC.CATEGORY_NAME,
             TR.INGREDIENTS,
             TR.RECIPE_BODY,
             TR.VIEW_NUM,
             TR.THUMBSUP_NUM,
             TR.RECOMMEND_STATUS,
-            TR.IMG_URL,
+            TR.RECIPE_IMAGE_URL,
             TR.REG_DATE
           FROM TBL_RECIPE TR
           JOIN TBL_MEMBER TM ON TR.MEMBER_CODE = TM.MEMBER_CODE
           JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
          ORDER BY TR.RECIPE_NO DESC
-         LIMIT #{ startRow }, #{ limit }
+         LIMIT ${ startRow - 1 }, #{ limit }
     </select>
     <select id="selectRecipe" parameterType="String" resultType="RecipeDto">
         SELECT
             TR.RECIPE_NO,
             TR.RECIPE_NAME,
+            TR.MEMBER_CODE,
             TM.MEMBER_NAME,
+            TR.CATEGORY_NO,
             TC.CATEGORY_NAME,
             TR.INGREDIENTS,
             TR.RECIPE_BODY,
             TR.VIEW_NUM,
             TR.THUMBSUP_NUM,
             TR.RECOMMEND_STATUS,
-            TR.IMG_URL,
+            TR.RECIPE_IMAGE_URL,
             TR.REG_DATE
           FROM TBL_RECIPE TR
                  JOIN TBL_MEMBER TM ON TR.MEMBER_CODE = TM.MEMBER_CODE
                  JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
          WHERE TR.RECIPE_NO = #{ recipeNo }
     </select>
+    <insert id="insertRecipe" parameterType="RecipeDto">
+        INSERT INTO TBL_RECIPE
+        (
+         RECIPE_NAME,
+         MEMBER_CODE,
+         CATEGORY_NO,
+         INGREDIENTS,
+         RECIPE_BODY,
+         VIEW_NUM,
+         THUMBSUP_NUM,
+         RECOMMEND_STATUS,
+         RECIPE_IMAGE_URL,
+         REG_DATE
+        )
+        VALUES
+        (
+         #{ recipeName },
+         #{ memberCode },
+         #{ categoryNo },
+         #{ ingredients },
+         #{ recipeBody },
+         DEFAULT,
+         DEFAULT,
+         DEFAULT,
+         #{ recipeImageUrl },
+         DEFAULT
+        )
+    </insert>
+    <update id="updateRecipeForRecommend" parameterType="String">
+        UPDATE TBL_RECIPE
+           SET RECOMMEND_STATUS = 'Y'
+         WHERE RECIPE_NO = #{ recipeNo }
+    </update>
+    <update id="updateRecipe" parameterType="RecipeDto">
+        UPDATE TBL_RECIPE
+           SET RECIPE_NAME = #{ recipeName },
+               CATEGORY_NO = #{ categoryNo },
+               INGREDIENTS = #{ ingredients },
+               RECIPE_BODY = #{ recipeBody },
+               RECIPE_IMAGE_URL = #{ recipeImageUrl }
+         WHERE RECIPE_NO = #{ recipeNo }
+    </update>
+    <delete id="deleteRecipe" parameterType="String">
+        DELETE FROM TBL_RECIPE
+         WHERE RECIPE_NO = #{ recipeNo }
+    </delete>
 </mapper>

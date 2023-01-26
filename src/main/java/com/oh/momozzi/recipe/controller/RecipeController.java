@@ -14,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-
 @Api(tags = {"뭐먹지 스웨거 연동 테스트"})
 @Slf4j
 @RestController
@@ -92,7 +90,7 @@ public class RecipeController {
     }
 
     @ApiOperation(value = "카테고리 별 레시피 조회")
-    @GetMapping("/recipes/categories/{categoryNo}")
+    @GetMapping("/categories/{categoryNo}/recipes")
     public ResponseEntity<ResponseDto> selectRecipeByCategoryWithPaging(@PathVariable String categoryNo, @RequestParam(name="offset", defaultValue="1") String offset) {
 
         log.info("[RecipeController] selectRecipeByCategoryWithPaging : " + offset);

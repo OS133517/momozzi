@@ -23,4 +23,8 @@ public interface RecipeMapper {
     int updateRecipe(RecipeDto recipeDto);
 
     int deleteRecipe(String recipeNo);
+
+    int selectRecipeTotalByCategory(String categoryNo);
+
+    List<RecipeDto> selectRecipeByCategoryWithPaging(SelectCriteria selectCriteria);
 }

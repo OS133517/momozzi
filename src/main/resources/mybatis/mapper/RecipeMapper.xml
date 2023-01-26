@@ -95,4 +95,32 @@
         DELETE FROM TBL_RECIPE
          WHERE RECIPE_NO = #{ recipeNo }
     </delete>
+    <select id="selectRecipeTotalByCategory" parameterType="String" resultType="_int">
+        SELECT
+            COUNT(*)
+          FROM TBL_RECIPE
+         WHERE CATEGORY_NO = #{ categoryNo }
+    </select>
+    <select id="selectRecipeByCategoryWithPaging" parameterType="com.oh.momozzi.common.paging.SelectCriteria" resultType="RecipeDto">
+        SELECT
+            TR.RECIPE_NO,
+            TR.RECIPE_NAME,
+            TR.MEMBER_CODE,
+            TM.MEMBER_NAME,
+            TR.CATEGORY_NO,
+            TC.CATEGORY_NAME,
+            TR.INGREDIENTS,
+            TR.RECIPE_BODY,
+            TR.VIEW_NUM,
+            TR.THUMBSUP_NUM,
+            TR.RECOMMEND_STATUS,
+            TR.RECIPE_IMAGE_URL,
+            TR.REG_DATE
+          FROM TBL_RECIPE TR
+          JOIN TBL_MEMBER TM ON TR.MEMBER_CODE = TM.MEMBER_CODE
+          JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
+         WHERE TR.CATEGORY_NO = #{ categoryNo }
+         ORDER BY TR.RECIPE_NO DESC
+         LIMIT ${ startRow - 1 }, #{ limit }
+    </select>
 </mapper>

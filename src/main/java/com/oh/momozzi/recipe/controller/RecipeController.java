@@ -90,4 +90,24 @@ public class RecipeController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 삭제 성공",  recipeService.deleteRecipe(recipeNo)));
     }
+
+    @ApiOperation(value = "카테고리 별 레시피 조회")
+    @GetMapping("/today-random/{categoryNo}")
+    public ResponseEntity<ResponseDto> selectRecipeByCategoryWithPaging(@PathVariable String categoryNo, @RequestParam(name="offset", defaultValue="1") String offset) {
+
+        log.info("[RecipeController] selectRecipeByCategoryWithPaging : " + offset);
+        int totalCount = recipeService.selectRecipeTotalByCategory(categoryNo);
+        int limit = 10;
+        int buttonAmount = 5;
+        SelectCriteria selectCriteria = Pagenation.getSelectCriteria(Integer.parseInt(offset), totalCount, limit, buttonAmount);
+
+        selectCriteria.setCategoryNo(categoryNo);
+        log.info("[RecipeController] selectCriteria : " + selectCriteria);
+
+        ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
+        responseDtoWithPaging.setPageInfo(selectCriteria);
+        responseDtoWithPaging.setData(recipeService.selectRecipeByCategoryWithPaging(selectCriteria));
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "카테고리별 레시피 조회 성공", responseDtoWithPaging));
+    }
 }

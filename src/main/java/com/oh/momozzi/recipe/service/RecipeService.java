@@ -170,4 +170,25 @@ public class RecipeService {
 
         return (result > 0) ? "레시피 삭제 성공" : "레시피 삭제 실패";
     }
+
+    public int selectRecipeTotalByCategory(String categoryNo) {
+
+        log.info("[RecipeService] selectRecipeTotalByCategory Start ===================================");
+        int result = recipeMapper.selectRecipeTotalByCategory(categoryNo);
+
+        log.info("[RecipeService] selectRecipeTotalByCategory End ===================================");
+        return result;
+    }
+
+    public List<RecipeDto> selectRecipeByCategoryWithPaging(SelectCriteria selectCriteria) {
+
+        log.info("[RecipeService] selectRecipeByCategoryWithPaging Start ===================================");
+        List<RecipeDto> recipeList = recipeMapper.selectRecipeByCategoryWithPaging(selectCriteria);
+
+        for(int i = 0 ; i < recipeList.size() ; i++) {
+            recipeList.get(i).setRecipeImageUrl(IMAGE_URL + recipeList.get(i).getRecipeImageUrl());
+        }
+        log.info("[RecipeService] selectRecipeByCategoryWithPaging End ===================================");
+        return recipeList;
+    }
 }

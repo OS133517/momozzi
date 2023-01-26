@@ -23,6 +23,27 @@ import java.util.Set;
 @EnableWebMvc
 public class SwaggerConfig {
 
+    // 스웨거 토큰 인증위해 추가
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("Authorization", "Authorization", "header");
+    }
+
+
+
+    // 여기부터 원래 있던 내용들
     private ApiInfo swaggerInfo() {
 
         return new ApiInfoBuilder()
@@ -39,20 +60,23 @@ public class SwaggerConfig {
                 .produces(getProduceContentTypes())
 
 //                // jwt 토큰 설정하기 위해 추가함
-//                .securityContexts(Arrays.asList(securityContext()))
-//                .securitySchemes(Arrays.asList(apiKey()))
-//                .apiInfo(swaggerInfo())
-//                .select()
-//                .apis(RequestHandlerSelectors.any())
-//                .paths(PathSelectors.any())
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
+                .apiInfo(swaggerInfo())
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
 
-                .apiInfo(swaggerInfo()) // 제목 설명등 문서정보를 가져오기위해 호출
-                .select() // ApiselectorBuilder 를 생성
-//                .apis(RequestHandlerSelectors.any()) 하나만 할 땐 any
-//              apis: api 스펙이 작성되어 있는 패키지 (Controller) 를 지정 해서 문서화하기 위함
-//              모든 경로를 API화
-                .apis(RequestHandlerSelectors.basePackage("com.oh.momozzi"))	//지정된 패키지만 API화
-                .paths(PathSelectors.any())	//paths: apis 에 있는 API 중 특정 path 를 선택해서 문서화	//모든 URL 패턴에 대해 수행
+                // 원래 있던 내용
+//                .apiInfo(swaggerInfo()) // 제목 설명등 문서정보를 가져오기위해 호출
+//                .select() // ApiselectorBuilder 를 생성
+////                .apis(RequestHandlerSelectors.any()) 하나만 할 땐 any
+////              apis: api 스펙이 작성되어 있는 패키지 (Controller) 를 지정 해서 문서화하기 위함
+////              모든 경로를 API화
+//                .apis(RequestHandlerSelectors.basePackage("com.oh.momozzi"))	//지정된 패키지만 API화
+//                .paths(PathSelectors.any())	//paths: apis 에 있는 API 중 특정 path 를 선택해서 문서화	//모든 URL 패턴에 대해 수행
+
+
                 .build()
                 .useDefaultResponseMessages(false);//Swagger 에서 제공해주는 기본 응답 코드 (200, 401, 403, 404). false 로 설정하면 response에 기본 응답 코드를 노출하지 않음 ////기본 응답 메시지 표시 여부
     }

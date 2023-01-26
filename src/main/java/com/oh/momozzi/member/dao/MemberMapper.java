@@ -16,4 +16,10 @@ public interface MemberMapper {
     Optional<MemberDto> findByMemberId(String memberId);
 
     MemberDto selectByMemberId(String memberId);
+
+    int updateMemberInfo(MemberDto memberDto);
+
+    int deleteMember(Long memberCode);
+
+    int insertDeleteMember(MemberDto deleteMember);
 }

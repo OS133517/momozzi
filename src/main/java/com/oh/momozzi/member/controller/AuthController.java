@@ -4,8 +4,7 @@ package com.oh.momozzi.member.controller;
 import com.oh.momozzi.common.ResponseDto;
 import com.oh.momozzi.member.dto.MemberDto;
 import com.oh.momozzi.member.service.AuthService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,5 +37,4 @@ public class AuthController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "로그인 성공", authService.login(memberDto)));
     }
-
 }

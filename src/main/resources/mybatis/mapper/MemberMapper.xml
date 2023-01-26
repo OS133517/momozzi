@@ -63,4 +63,28 @@
                 #{ memberEmail }
             )
     </insert>
+    <update id="updateMemberInfo" parameterType="MemberDto">
+        UPDATE TBL_MEMBER
+           SET MEMBER_EMAIL = #{ memberEmail }
+             <if test="memberPassword != null and '' != memberPassword">
+                 ,MEMBER_PASSWORD = #{ memberPassword }
+             </if>
+         WHERE MEMBER_CODE = #{ memberCode }
+    </update>
+    <delete id="deleteMember" parameterType="_long">
+        DELETE FROM TBL_MEMBER
+         WHERE MEMBER_CODE = #{ memberCode }
+    </delete>
+    <insert id="insertDeleteMember" parameterType="MemberDto">
+        INSERT INTO TBL_DEL_MEMBER
+        VALUES
+            (
+             #{ memberCode },
+             #{ memberId },
+             #{ memberPassword },
+             #{ memberName },
+             #{ memberEmail },
+             #{ memberRole }
+            )
+    </insert>
 </mapper>

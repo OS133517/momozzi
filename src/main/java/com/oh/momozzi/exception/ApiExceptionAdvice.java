@@ -34,4 +34,11 @@ public class ApiExceptionAdvice {
                 .body(new ApiExceptionDto(HttpStatus.UNAUTHORIZED, e.getMessage()));
     }
 
+    @ExceptionHandler(WrongPasswordException.class)
+    public ResponseEntity<ApiExceptionDto> exceptionHandler(WrongPasswordException e) {
+        //e.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ApiExceptionDto(HttpStatus.BAD_REQUEST, e.getMessage()));
+    }
 }

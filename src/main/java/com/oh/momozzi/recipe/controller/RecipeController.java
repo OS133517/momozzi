@@ -56,7 +56,7 @@ public class RecipeController {
     }
 
     @ApiOperation(value = "레시피 등록")
-    @PostMapping(value = "/recipes")
+    @PostMapping("/recipes")
     public ResponseEntity<ResponseDto> insertRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
 
         recipeDto.setRecipeImage(recipeImage);

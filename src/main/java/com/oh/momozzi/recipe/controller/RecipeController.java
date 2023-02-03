@@ -90,7 +90,7 @@ public class RecipeController {
     }
 
     @ApiOperation(value = "카테고리 별 레시피 조회")
-    @GetMapping("/categories/{categoryNo}/recipes")
+    @GetMapping("/recipes/categories/{categoryNo}")
     public ResponseEntity<ResponseDto> selectRecipeByCategoryWithPaging(@PathVariable String categoryNo, @RequestParam(name="offset", defaultValue="1") String offset) {
 
         log.info("[RecipeController] selectRecipeByCategoryWithPaging : " + offset);

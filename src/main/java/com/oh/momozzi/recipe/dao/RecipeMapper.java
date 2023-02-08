@@ -16,6 +16,8 @@ public interface RecipeMapper {
 
     RecipeDto selectRecipe(String recipeNo);
 
+    List<RecipeDto> selectRecipeTopThree();
+
     int insertRecipe(RecipeDto recipe);
 
     int updateRecipeForRecommend(String recipeNo);

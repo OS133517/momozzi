@@ -79,13 +79,14 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
-        // 로컬 React 에서 오는 요청은 cors 허용
-        configuration.setAllowedOrigins(Arrays.asList("localhost:3000"));// 해당 ip만 응답
+        // 로컬 React에서 오는 요청은 CORS 허용해준다.
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000" ));// 해당 ip만 응답
+        //configuration.setAllowedOrigins(Arrays.asList("http://43.200.33.166:3000" ));// 해당 ip만 응답
 
-        configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));// 해당 메소드만 응답
-        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-Type", "Access-Control-Allow-Headers", "Authorization", "X-Requested-With"));// 해당 헤더의 응답만 허용
+        configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));// 해당메소드만응답하겠다
+        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-Type", "Access-Control-Allow-Headers", "Authorization", "X-Requested-With"));// 해당 헤더의 응답만허용
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
     /** 서버 포트가 다르면 위의 cors 처리를 해줘야 작동한다. **

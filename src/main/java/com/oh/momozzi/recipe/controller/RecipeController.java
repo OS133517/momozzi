@@ -46,6 +46,13 @@ public class RecipeController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
     }
 
+    @ApiOperation(value = "레시피 3등까지 조회")
+    @GetMapping("/recipes/top3")
+    public ResponseEntity<ResponseDto> selectRecipeTopThree() {
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", recipeService.selectRecipeTopThree()));
+    }
+
     @ApiOperation(value = "레시피 상세 조회")
     @GetMapping("/recipes/{recipeNo}")
     public ResponseEntity<ResponseDto> selectRecipeDetail(@PathVariable String recipeNo) {

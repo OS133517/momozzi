@@ -29,6 +29,27 @@
          ORDER BY TR.RECIPE_NO DESC
          LIMIT ${ startRow - 1 }, #{ limit }
     </select>
+    <select id="selectRecipeTopThree" resultType="RecipeDto">
+        SELECT
+            TR.RECIPE_NO,
+            TR.RECIPE_NAME,
+            TR.MEMBER_CODE,
+            TM.MEMBER_NAME,
+            TR.CATEGORY_NO,
+            TC.CATEGORY_NAME,
+            TR.INGREDIENTS,
+            TR.RECIPE_BODY,
+            TR.VIEW_NUM,
+            TR.THUMBSUP_NUM,
+            TR.RECOMMEND_STATUS,
+            TR.RECIPE_IMAGE_URL,
+            TR.REG_DATE
+         FROM TBL_RECIPE TR
+         JOIN TBL_MEMBER TM ON TR.MEMBER_CODE = TM.MEMBER_CODE
+         JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
+        ORDER BY TR.THUMBSUP_NUM DESC
+        LIMIT 0, 3
+    </select>
     <select id="selectRecipe" parameterType="String" resultType="RecipeDto">
         SELECT
             TR.RECIPE_NO,
@@ -45,8 +66,8 @@
             TR.RECIPE_IMAGE_URL,
             TR.REG_DATE
           FROM TBL_RECIPE TR
-                 JOIN TBL_MEMBER TM ON TR.MEMBER_CODE = TM.MEMBER_CODE
-                 JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
+          JOIN TBL_MEMBER TM ON TR.MEMBER_CODE = TM.MEMBER_CODE
+          JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
          WHERE TR.RECIPE_NO = #{ recipeNo }
     </select>
     <insert id="insertRecipe" parameterType="RecipeDto">

@@ -50,6 +50,19 @@ public class RecipeService {
         return recipeList;
     }
 
+    public List<RecipeDto> selectRecipeTopThree() {
+
+        log.info("[RecipeService] selectRecipeTopThree Start ===================================");
+        List<RecipeDto> recipeDtoList = recipeMapper.selectRecipeTopThree();
+
+        for(int i = 0 ; i < recipeDtoList.size() ; i++) {
+            recipeDtoList.get(i).setRecipeImageUrl(IMAGE_URL + recipeDtoList.get(i).getRecipeImageUrl());
+        }
+
+        log.info("[RecipeService] selectRecipeTopThree End ===================================");
+        return recipeDtoList;
+    }
+
     public RecipeDto selectRecipe(String recipeNo) {
 
         log.info("[RecipeService] selectRecipe Start ===================================");

@@ -12,7 +12,11 @@ public interface RecipeMapper {
 
     int selectRecipeTotal();
 
+    int selectRecipeTotalRecommend();
+
     List<RecipeDto> selectRecipeListWithPaging(SelectCriteria selectCriteria);
+
+    List<RecipeDto> selectRecipeListWithPagingRecommended(SelectCriteria selectCriteria);
 
     RecipeDto selectRecipe(String recipeNo);
 

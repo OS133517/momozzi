@@ -46,6 +46,25 @@ public class RecipeController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
     }
 
+    @ApiOperation(value = "페이징 처리한 관리자 추천 레시피 목록 조회")
+    @GetMapping("/recipes/recommend")
+    public ResponseEntity<ResponseDto> selectRecipeListWithPagingRecommended(@RequestParam(name="offset", defaultValue="1") String offset) {
+
+        log.info("[RecipeController] selectRecipeListWithPagingRecommended : " + offset);
+        int totalCount = recipeService.selectRecipeTotalRecommend();
+        int limit = 10;
+        int buttonAmount = 5;
+        SelectCriteria selectCriteria = Pagenation.getSelectCriteria(Integer.parseInt(offset), totalCount, limit, buttonAmount);
+
+        log.info("[RecipeController] selectCriteria : " + selectCriteria);
+
+        ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
+        responseDtoWithPaging.setPageInfo(selectCriteria);
+        responseDtoWithPaging.setData(recipeService.selectRecipeListWithPagingRecommended(selectCriteria));
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
+    }
+
     @ApiOperation(value = "레시피 3등까지 조회")
     @GetMapping("/recipes/top3")
     public ResponseEntity<ResponseDto> selectRecipeTopThree() {

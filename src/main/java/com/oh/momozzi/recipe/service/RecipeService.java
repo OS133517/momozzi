@@ -38,6 +38,15 @@ public class RecipeService {
         return result;
     }
 
+    public int selectRecipeTotalRecommend() {
+
+        log.info("[RecipeService] selectRecipeTotalRecommend Start ===================================");
+        int result = recipeMapper.selectRecipeTotalRecommend();
+
+        log.info("[RecipeService] selectRecipeTotalRecommend End ===================================");
+        return result;
+    }
+
     public List<RecipeDto> selectRecipeListWithPaging(SelectCriteria selectCriteria) {
 
         log.info("[RecipeService] selectRecipeListWithPaging Start ===================================");
@@ -46,7 +55,20 @@ public class RecipeService {
         for(int i = 0 ; i < recipeList.size() ; i++) {
             recipeList.get(i).setRecipeImageUrl(IMAGE_URL + recipeList.get(i).getRecipeImageUrl());
         }
+        log.info("recipe 찍어보기 = {}", recipeList.get(0));
         log.info("[RecipeService] selectRecipeListWithPaging End ===================================");
+        return recipeList;
+    }
+
+    public List<RecipeDto> selectRecipeListWithPagingRecommended(SelectCriteria selectCriteria) {
+
+        log.info("[RecipeService] selectRecipeListWithPagingRecommended Start ===================================");
+        List<RecipeDto> recipeList = recipeMapper.selectRecipeListWithPagingRecommended(selectCriteria);
+
+        for(int i = 0 ; i < recipeList.size() ; i++) {
+            recipeList.get(i).setRecipeImageUrl(IMAGE_URL + recipeList.get(i).getRecipeImageUrl());
+        }
+        log.info("[RecipeService] selectRecipeListWithPagingRecommended End ===================================");
         return recipeList;
     }
 

@@ -1,7 +1,7 @@
 package com.oh.momozzi.recipe.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
@@ -22,5 +22,6 @@ public class RecipeDto {
     private String recommendStatus;
     private MultipartFile recipeImage;
     private String recipeImageUrl;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date regDate;
 }

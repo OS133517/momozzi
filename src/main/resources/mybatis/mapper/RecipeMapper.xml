@@ -98,6 +98,11 @@
           JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
          WHERE TR.RECIPE_NO = #{ recipeNo }
     </select>
+    <update id="updateViewNum" parameterType="String">
+        UPDATE TBL_RECIPE
+           SET VIEW_NUM = VIEW_NUM + 1
+         WHERE RECIPE_NO = #{ recipeNo }
+    </update>
     <insert id="insertRecipe" parameterType="RecipeDto">
         INSERT INTO TBL_RECIPE
         (

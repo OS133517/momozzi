@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -90,8 +89,9 @@ public class RecipeService {
         log.info("[RecipeService] selectRecipe Start ===================================");
         RecipeDto recipeDto = recipeMapper.selectRecipe(recipeNo);
         recipeDto.setRecipeImageUrl(IMAGE_URL + recipeDto.getRecipeImageUrl());
-
+        log.info("recipe date 확인 = {}", recipeDto);
         log.info("[RecipeService] selectRecipe End ===================================");
+        recipeMapper.updateViewNum(recipeNo);
         return recipeDto;
     }
 

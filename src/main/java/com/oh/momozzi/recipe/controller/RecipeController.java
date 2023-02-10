@@ -81,9 +81,17 @@ public class RecipeController {
 
     @ApiOperation(value = "레시피 등록")
     @PostMapping("/recipes")
-    public ResponseEntity<ResponseDto> insertRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
+    public ResponseEntity<ResponseDto> insertRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart String recipeName
+            , String categoryNo, String ingredients, String recipeBody, String memberCode) {
 
+        RecipeDto recipeDto = new RecipeDto();
+        recipeDto.setMemberCode(memberCode);
+        recipeDto.setRecipeName(recipeName);
+        recipeDto.setCategoryNo(categoryNo);
+        recipeDto.setIngredients(ingredients);
+        recipeDto.setRecipeBody(recipeBody);
         recipeDto.setRecipeImage(recipeImage);
+
         log.info("[RecipeController] PostMapping RecipeDto : " + recipeDto);
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 입력 성공", recipeService.insertRecipe(recipeDto)));
     }

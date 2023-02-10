@@ -11,6 +11,7 @@ public class RecipeDto {
 
     private String recipeNo;
     private String recipeName;
+    private String memberCode;
     private String memberId;
     private String memberName;
     private String categoryNo;

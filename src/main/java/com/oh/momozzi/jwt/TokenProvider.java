@@ -50,6 +50,7 @@ public class TokenProvider {
                 .claims()
                 .setSubject(member.getMemberId());// sub : subject. 토큰 제목을 나타낸다.
         claims.put(AUTHORITIES_KEY, roles);// 권한 담기
+        claims.put("memberCode", member.getMemberCode());
 
         long now = (new Date()).getTime();// 만료시간 때문에 현재 시간을 구하는 듯
 

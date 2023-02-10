@@ -87,11 +87,11 @@ public class RecipeService {
     public RecipeDto selectRecipe(String recipeNo) {
 
         log.info("[RecipeService] selectRecipe Start ===================================");
+        recipeMapper.updateViewNum(recipeNo);
         RecipeDto recipeDto = recipeMapper.selectRecipe(recipeNo);
         recipeDto.setRecipeImageUrl(IMAGE_URL + recipeDto.getRecipeImageUrl());
         log.info("recipe date 확인 = {}", recipeDto);
         log.info("[RecipeService] selectRecipe End ===================================");
-        recipeMapper.updateViewNum(recipeNo);
         return recipeDto;
     }
 
@@ -144,6 +144,24 @@ public class RecipeService {
 
         log.info("[RecipeService] result > 0 성공: "+ result);
         return (result > 0) ? "레시피 관리자 추천 성공" : "레시피 관리자 추천 실패";
+    }
+
+    @Transactional
+    public String updateRecipeForThumbsUp(String recipeNo) {
+
+        log.info("[RecipeService] updateRecipeForThumbsUp Start ===================================");
+        log.info("[RecipeService] recipeNo : " + recipeNo);
+
+        int result = 0;
+
+        try {
+            result = recipeMapper.updateRecipeForThumbsUp(recipeNo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        log.info("[RecipeService] result > 0 성공: "+ result);
+        return (result > 0) ? "레시피 멤버 추천 성공" : "레시피 멤버 추천 실패";
     }
 
     @Transactional

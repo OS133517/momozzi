@@ -18,7 +18,7 @@
         SELECT
             TR.RECIPE_NO,
             TR.RECIPE_NAME,
-            TR.MEMBER_CODE,
+            TM.MEMBER_ID,
             TM.MEMBER_NAME,
             TR.CATEGORY_NO,
             TC.CATEGORY_NAME,
@@ -39,7 +39,7 @@
         SELECT
             TR.RECIPE_NO,
             TR.RECIPE_NAME,
-            TR.MEMBER_CODE,
+            TM.MEMBER_ID,
             TM.MEMBER_NAME,
             TR.CATEGORY_NO,
             TC.CATEGORY_NAME,
@@ -61,7 +61,7 @@
         SELECT
             TR.RECIPE_NO,
             TR.RECIPE_NAME,
-            TR.MEMBER_CODE,
+            TM.MEMBER_ID,
             TM.MEMBER_NAME,
             TR.CATEGORY_NO,
             TC.CATEGORY_NAME,
@@ -82,7 +82,7 @@
         SELECT
             TR.RECIPE_NO,
             TR.RECIPE_NAME,
-            TR.MEMBER_CODE,
+            TM.MEMBER_ID,
             TM.MEMBER_NAME,
             TR.CATEGORY_NO,
             TC.CATEGORY_NAME,
@@ -107,7 +107,7 @@
         INSERT INTO TBL_RECIPE
         (
          RECIPE_NAME,
-         MEMBER_CODE,
+         MEMBER_ID,
          CATEGORY_NO,
          INGREDIENTS,
          RECIPE_BODY,
@@ -120,7 +120,7 @@
         VALUES
         (
          #{ recipeName },
-         #{ memberCode },
+         #{ memberId },
          #{ categoryNo },
          #{ ingredients },
          #{ recipeBody },
@@ -134,6 +134,11 @@
     <update id="updateRecipeForRecommend" parameterType="String">
         UPDATE TBL_RECIPE
            SET RECOMMEND_STATUS = 'Y'
+         WHERE RECIPE_NO = #{ recipeNo }
+    </update>
+    <update id="updateRecipeForThumbsUp" parameterType="String">
+        UPDATE TBL_RECIPE
+           SET THUMBSUP_NUM = THUMBSUP_NUM + 1
          WHERE RECIPE_NO = #{ recipeNo }
     </update>
     <update id="updateRecipe" parameterType="RecipeDto">
@@ -159,7 +164,7 @@
         SELECT
             TR.RECIPE_NO,
             TR.RECIPE_NAME,
-            TR.MEMBER_CODE,
+            TM.MEMBER_ID,
             TM.MEMBER_NAME,
             TR.CATEGORY_NO,
             TC.CATEGORY_NAME,

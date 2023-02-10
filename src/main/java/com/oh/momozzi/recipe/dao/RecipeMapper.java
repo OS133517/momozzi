@@ -27,6 +27,8 @@ public interface RecipeMapper {
 
     int updateRecipeForRecommend(String recipeNo);
 
+    int updateRecipeForThumbsUp(String recipeNo);
+
     int updateRecipe(RecipeDto recipeDto);
 
     int deleteRecipe(String recipeNo);

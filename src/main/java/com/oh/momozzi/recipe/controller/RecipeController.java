@@ -96,6 +96,14 @@ public class RecipeController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 관리자 추천 성공", recipeService.updateRecipeForRecommend(recipeNo)));
     }
 
+    @ApiOperation(value = "레시피 사용자 추천")
+    @PutMapping("/recipes-thumbs-up/{recipeNo}")
+    public ResponseEntity<ResponseDto> updateRecipeForThumbsUp(@PathVariable String recipeNo) {
+
+        log.info("[RecipeController] PutMapping recipeNo : " + recipeNo);
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 멤버 추천 성공", recipeService.updateRecipeForThumbsUp(recipeNo)));
+    }
+
     @ApiOperation(value = "레시피 수정")
     @PutMapping("/recipes")
     public ResponseEntity<ResponseDto> updateRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {

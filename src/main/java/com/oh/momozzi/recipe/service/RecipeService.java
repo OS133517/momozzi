@@ -71,19 +71,6 @@ public class RecipeService {
         return recipeList;
     }
 
-    public List<RecipeDto> selectRecipeTopThree() {
-
-        log.info("[RecipeService] selectRecipeTopThree Start ===================================");
-        List<RecipeDto> recipeDtoList = recipeMapper.selectRecipeTopThree();
-
-        for(int i = 0 ; i < recipeDtoList.size() ; i++) {
-            recipeDtoList.get(i).setRecipeImageUrl(IMAGE_URL + recipeDtoList.get(i).getRecipeImageUrl());
-        }
-
-        log.info("[RecipeService] selectRecipeTopThree End ===================================");
-        return recipeDtoList;
-    }
-
     public RecipeDto selectRecipe(String recipeNo) {
 
         log.info("[RecipeService] selectRecipe Start ===================================");
@@ -243,5 +230,44 @@ public class RecipeService {
         }
         log.info("[RecipeService] selectRecipeByCategoryWithPaging End ===================================");
         return recipeList;
+    }
+
+//    public List<RecipeDto> selectRecipesRandom() {
+//
+//        log.info("[RecipeService] selectRecipesRandom Start ===================================");
+//        List<RecipeDto> randomRecipes = new ArrayList<>();
+//
+//        RecipeDto randomRecipe = recipeMapper.selectRecipeRandom();
+//        RecipeDto randomRecommendRecipe = recipeMapper.selectRecipeRecommendRandom();
+//
+//        log.info("랜덤 레시피 = {}", randomRecipe);
+//        log.info("랜덤 추천 레시피 = {}", randomRecommendRecipe);
+//
+//        randomRecipe.setRecipeImageUrl(IMAGE_URL + randomRecipe.getRecipeImageUrl());
+//        randomRecommendRecipe.setRecipeImageUrl(IMAGE_URL + randomRecommendRecipe.getRecipeImageUrl());
+//
+//        randomRecipes.add(randomRecipe);
+//        randomRecipes.add(randomRecommendRecipe);
+//
+//        log.info("[RecipeService] selectRecipesRandom End ===================================");
+//        return randomRecipes;
+//    }
+
+    public List<RecipeDto> selectRecipeTopAndRandoms() {
+
+        log.info("[RecipeService] selectRecipeTopAndRandoms Start ===================================");
+        List<RecipeDto> recipeDtoList = recipeMapper.selectRecipeTopThree();
+        RecipeDto randomRecipe = recipeMapper.selectRecipeRandom();
+        RecipeDto randomRecommendRecipe = recipeMapper.selectRecipeRecommendRandom();
+
+        recipeDtoList.add(randomRecipe);
+        recipeDtoList.add(randomRecommendRecipe);
+
+        for(int i = 0 ; i < recipeDtoList.size() ; i++) {
+            recipeDtoList.get(i).setRecipeImageUrl(IMAGE_URL + recipeDtoList.get(i).getRecipeImageUrl());
+        }
+
+        log.info("[RecipeService] selectRecipeTopAndRandoms End ===================================");
+        return recipeDtoList;
     }
 }

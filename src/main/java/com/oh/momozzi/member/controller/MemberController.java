@@ -11,11 +11,7 @@ import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @Slf4j
 @Api(tags = {"뭐먹지 스웨거 연동 테스트"})
@@ -64,6 +60,6 @@ public class MemberController {
     @DeleteMapping("/members")
     public ResponseEntity<ResponseDto> deleteMember(@RequestBody JSONObject memberPassword, Authentication authentication) {
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 탈퇴", memberService.deleteMember(memberPassword, authentication)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 탈퇴 성공", memberService.deleteMember(memberPassword, authentication)));
     }
 }

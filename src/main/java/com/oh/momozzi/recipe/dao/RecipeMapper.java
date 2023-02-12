@@ -36,4 +36,8 @@ public interface RecipeMapper {
     int selectRecipeTotalByCategory(String categoryNo);
 
     List<RecipeDto> selectRecipeByCategoryWithPaging(SelectCriteria selectCriteria);
+
+    RecipeDto selectRecipeRandom();
+
+    RecipeDto selectRecipeRecommendRandom();
 }

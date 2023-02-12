@@ -182,4 +182,23 @@
          ORDER BY TR.RECIPE_NO DESC
          LIMIT ${ startRow - 1 }, #{ limit }
     </select>
+    <select id="selectRecipeRandom" resultType="RecipeDto">
+        SELECT
+            RECIPE_NO,
+            RECIPE_NAME,
+            RECIPE_IMAGE_URL
+          FROM TBL_RECIPE
+         ORDER BY RAND()
+          LIMIT 1
+    </select>
+    <select id="selectRecipeRecommendRandom" resultType="RecipeDto">
+        SELECT
+            RECIPE_NO,
+            RECIPE_NAME,
+            RECIPE_IMAGE_URL
+         FROM TBL_RECIPE
+        WHERE RECOMMEND_STATUS = 'Y'
+        ORDER BY RAND()
+         LIMIT 1
+    </select>
 </mapper>

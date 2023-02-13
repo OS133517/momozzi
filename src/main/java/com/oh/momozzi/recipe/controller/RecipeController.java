@@ -9,6 +9,7 @@ import com.oh.momozzi.recipe.service.RecipeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -170,14 +171,15 @@ public class RecipeController {
 
     @ApiOperation(value = "마이 레시피 등록")
     @PostMapping("/recipes/my-recipe")
-    public ResponseEntity<ResponseDto> insertMyRecipe(String memberCode, String recipeNo) {
+    public ResponseEntity<ResponseDto> insertMyRecipe(@RequestBody JSONObject object) {
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("memberCode", memberCode);
-        map.put("recipeNo", recipeNo);
+        map.put("memberCode", (String) object.get("memberCode"));
+        map.put("recipeNo", (String) object.get("recipeNo"));
+        log.info("params = {}", map);
 
-        log.info("[RecipeController] PostMapping map : " + map);
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 입력 성공", recipeService.insertMyRecipe(map)));
+//        log.info("[RecipeController] PostMapping map : " + map);
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "마이레시피 입력 성공", recipeService.insertMyRecipe(map)));
     }
 
 

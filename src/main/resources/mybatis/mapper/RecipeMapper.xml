@@ -32,7 +32,7 @@
           FROM TBL_RECIPE TR
           JOIN TBL_MEMBER TM ON TR.MEMBER_CODE = TM.MEMBER_CODE
           JOIN TBL_CATEGORY TC ON TR.CATEGORY_NO = TC.CATEGORY_NO
-         ORDER BY TR.THUMBSUP_NUM DESC
+         ORDER BY TR.RECIPE_NO DESC
          LIMIT ${ startRow - 1 }, #{ limit }
     </select>
     <select id="selectRecipeListWithPagingRecommended" parameterType="com.oh.momozzi.common.paging.SelectCriteria" resultType="RecipeDto">

@@ -4,6 +4,7 @@ import com.oh.momozzi.common.paging.SelectCriteria;
 import com.oh.momozzi.recipe.dto.RecipeDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -40,4 +41,6 @@ public interface RecipeMapper {
     RecipeDto selectRecipeRandom();
 
     RecipeDto selectRecipeRecommendRandom();
+
+    int insertMyRecipe(HashMap<String, String> map);
 }

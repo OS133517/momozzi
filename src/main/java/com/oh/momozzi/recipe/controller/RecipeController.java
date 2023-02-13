@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+
 @Api(tags = {"뭐먹지 스웨거 연동 테스트"})
 @Slf4j
 @RestController
@@ -74,7 +76,7 @@ public class RecipeController {
 
     @ApiOperation(value = "레시피 등록")
     @PostMapping("/recipes")
-    public ResponseEntity<ResponseDto> insertRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart String recipeName
+    public ResponseEntity<ResponseDto> insertRecipe(@RequestPart(required = false) MultipartFile recipeImage, String recipeName
             , String categoryNo, String ingredients, String recipeBody, String memberCode) {
 
         RecipeDto recipeDto = new RecipeDto();
@@ -107,9 +109,17 @@ public class RecipeController {
 
     @ApiOperation(value = "레시피 수정")
     @PutMapping("/recipes")
-    public ResponseEntity<ResponseDto> updateRecipe(@RequestPart(required = false) MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
+    public ResponseEntity<ResponseDto> updateRecipe(@RequestPart(required = false) MultipartFile recipeImage, String recipeName, String categoryNo, String ingredients, String recipeBody, String memberCode, String recipeNo) {
 
+        RecipeDto recipeDto = new RecipeDto();
+
+        recipeDto.setRecipeNo(recipeNo);
         recipeDto.setRecipeImage(recipeImage);
+        recipeDto.setMemberCode(memberCode);
+        recipeDto.setRecipeName(recipeName);
+        recipeDto.setCategoryNo(categoryNo);
+        recipeDto.setIngredients(ingredients);
+        recipeDto.setRecipeBody(recipeBody);
         log.info("[RecipeController]PutMapping recipeDto : " + recipeDto);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 업데이트 성공",  recipeService.updateRecipe(recipeDto)));
@@ -151,11 +161,24 @@ public class RecipeController {
 //        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 랜덤 조회 성공",  recipeService.selectRecipesRandom()));
 //    }
 
-    @ApiOperation(value = "레시피 3등까지 조회")
+    @ApiOperation(value = "레시피 탑3, 랜덤 레시피 조회")
     @GetMapping("/recipes/top3-and-randoms")
     public ResponseEntity<ResponseDto> selectRecipeTopAndRandoms() {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", recipeService.selectRecipeTopAndRandoms()));
     }
+
+    @ApiOperation(value = "마이 레시피 등록")
+    @PostMapping("/recipes/my-recipe")
+    public ResponseEntity<ResponseDto> insertMyRecipe(String memberCode, String recipeNo) {
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("memberCode", memberCode);
+        map.put("recipeNo", recipeNo);
+
+        log.info("[RecipeController] PostMapping map : " + map);
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "레시피 입력 성공", recipeService.insertMyRecipe(map)));
+    }
+
 
 }

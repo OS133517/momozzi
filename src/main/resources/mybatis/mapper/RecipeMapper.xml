@@ -143,11 +143,21 @@
     </update>
     <update id="updateRecipe" parameterType="RecipeDto">
         UPDATE TBL_RECIPE
-           SET RECIPE_NAME = #{ recipeName },
-               CATEGORY_NO = #{ categoryNo },
-               INGREDIENTS = #{ ingredients },
-               RECIPE_BODY = #{ recipeBody },
-               RECIPE_IMAGE_URL = #{ recipeImageUrl }
+        <trim prefix="SET" suffixOverrides=",">
+            RECIPE_IMAGE_URL = #{ recipeImageUrl },
+            <if test="recipeName != null">
+                RECIPE_NAME = #{ recipeName },
+            </if>
+            <if test="categoryNo != null">
+                CATEGORY_NO = #{ categoryNo },
+            </if>
+            <if test="ingredients != null">
+                INGREDIENTS = #{ ingredients },
+            </if>
+            <if test="recipeBody != null">
+                RECIPE_BODY = #{ recipeBody },
+            </if>
+        </trim>
          WHERE RECIPE_NO = #{ recipeNo }
     </update>
     <delete id="deleteRecipe" parameterType="String">
@@ -201,4 +211,16 @@
         ORDER BY RAND()
          LIMIT 1
     </select>
+    <insert id="insertMyRecipe" parameterType="HashMap">
+        INSERT INTO TBL_MY_RECIPE
+            (
+             RECIPE_NO,
+             MEMBER_CODE
+            )
+        VALUES
+            (
+             #{ recipeNo },
+             #{ memberCode }
+            )
+    </insert>
 </mapper>

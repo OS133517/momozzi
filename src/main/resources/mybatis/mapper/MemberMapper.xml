@@ -87,4 +87,38 @@
              #{ memberRole }
             )
     </insert>
+    <select id="selectMyActivityTotal" parameterType="String" resultType="_int">
+        SELECT
+            COUNT(*)
+          FROM TBL_RECIPE
+         WHERE MEMBER_CODE = #{ memberCode }
+    </select>
+    <select id="selectMyRecipeTotal" parameterType="String" resultType="_int">
+        SELECT
+            COUNT(*)
+        FROM TBL_MY_RECIPE
+        WHERE MEMBER_CODE = #{ memberCode }
+    </select>
+    <select id="selectMyActivityWithPaging" parameterType="com.oh.momozzi.common.paging.SelectCriteria" resultType="RecipeDto">
+        SELECT
+            RECIPE_NO,
+            RECIPE_NAME,
+            VIEW_NUM,
+            THUMBSUP_NUM,
+            REG_DATE
+          FROM TBL_RECIPE
+         WHERE MEMBER_CODE = #{ categoryNo }
+         ORDER BY THUMBSUP_NUM
+         LIMIT ${ startRow - 1 }, #{ limit }
+    </select>
+    <select id="selectMyRecipeWithPaging" parameterType="com.oh.momozzi.common.paging.SelectCriteria" resultType="RecipeDto">
+        SELECT
+            TM.RECIPE_NO,
+            TR.RECIPE_NAME,
+            TR.INGREDIENTS
+          FROM TBL_MY_RECIPE TM
+          JOIN TBL_RECIPE TR ON TM.RECIPE_NO = TR.RECIPE_NO
+         WHERE TM.MEMBER_CODE = #{ categoryNo }
+         LIMIT ${ startRow - 1 }, #{ limit }
+    </select>
 </mapper>

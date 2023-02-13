@@ -2,6 +2,9 @@ package com.oh.momozzi.member.controller;
 
 
 import com.oh.momozzi.common.ResponseDto;
+import com.oh.momozzi.common.paging.Pagenation;
+import com.oh.momozzi.common.paging.ResponseDtoWithPaging;
+import com.oh.momozzi.common.paging.SelectCriteria;
 import com.oh.momozzi.member.dto.MemberDto;
 import com.oh.momozzi.member.service.MemberService;
 import io.swagger.annotations.Api;
@@ -62,4 +65,46 @@ public class MemberController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 탈퇴 성공", memberService.deleteMember(memberPassword, authentication)));
     }
+
+    @ApiOperation(value = "내 활동 조회")
+    @GetMapping("/members/{memberCode}/activity")
+    public ResponseEntity<ResponseDto> selectMyActivityWithPaging(@PathVariable String memberCode, @RequestParam(name="offset", defaultValue="1") String offset) {
+
+        log.info("[MemberController] selectMyActivityWithPaging : " + offset);
+        int totalCount = memberService.selectMyActivityTotal(memberCode);
+        int limit = 10;
+        int buttonAmount = 5;
+        SelectCriteria selectCriteria = Pagenation.getSelectCriteria(Integer.parseInt(offset), totalCount, limit, buttonAmount);
+        selectCriteria.setCategoryNo(memberCode);
+
+        log.info("[MemberController] selectCriteria : " + selectCriteria);
+
+        ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
+        responseDtoWithPaging.setPageInfo(selectCriteria);
+        responseDtoWithPaging.setData(memberService.selectMyActivityWithPaging(selectCriteria));
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "내 활동 조회 성공",responseDtoWithPaging));
+    }
+
+    @ApiOperation(value = "마이 레시피 조회")
+    @GetMapping("/members/{memberCode}/my-recipe")
+    public ResponseEntity<ResponseDto> selectMyRecipeWithPaging(@PathVariable String memberCode, @RequestParam(name="offset", defaultValue="1") String offset) {
+
+        log.info("[MemberController] selectMyRecipeWithPaging : " + offset);
+        int totalCount = memberService.selectMyRecipeTotal(memberCode);
+        int limit = 10;
+        int buttonAmount = 5;
+        SelectCriteria selectCriteria = Pagenation.getSelectCriteria(Integer.parseInt(offset), totalCount, limit, buttonAmount);
+        selectCriteria.setCategoryNo(memberCode);
+
+        log.info("[MemberController] selectCriteria : " + selectCriteria);
+
+        ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
+        responseDtoWithPaging.setPageInfo(selectCriteria);
+        responseDtoWithPaging.setData(memberService.selectMyRecipeWithPaging(selectCriteria));
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "마이 레시피 조회 성공",responseDtoWithPaging));
+    }
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -224,9 +225,10 @@ public class RecipeService {
 
         log.info("[RecipeService] selectRecipeByCategoryWithPaging Start ===================================");
         List<RecipeDto> recipeList = recipeMapper.selectRecipeByCategoryWithPaging(selectCriteria);
-
+        log.info("레시피 체크 = {}", recipeList);
         for(int i = 0 ; i < recipeList.size() ; i++) {
             recipeList.get(i).setRecipeImageUrl(IMAGE_URL + recipeList.get(i).getRecipeImageUrl());
+
         }
         log.info("[RecipeService] selectRecipeByCategoryWithPaging End ===================================");
         return recipeList;
@@ -269,5 +271,16 @@ public class RecipeService {
 
         log.info("[RecipeService] selectRecipeTopAndRandoms End ===================================");
         return recipeDtoList;
+    }
+
+    @Transactional
+    public String insertMyRecipe(HashMap<String, String> map) {
+
+        log.info("[RecipeService] insertMyRecipe start ===================================");
+        int result = recipeMapper.insertMyRecipe(map);
+        log.info("[RecipeService] insertMyRecipe End ===================================");
+        log.info("[RecipeService] result > 0 성공: "+ result);
+
+        return (result > 0)? "등록 성공" : "등록 실패";
     }
 }

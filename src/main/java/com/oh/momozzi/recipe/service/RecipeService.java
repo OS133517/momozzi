@@ -262,8 +262,14 @@ public class RecipeService {
         RecipeDto randomRecipe = recipeMapper.selectRecipeRandom();
         RecipeDto randomRecommendRecipe = recipeMapper.selectRecipeRecommendRandom();
 
-        recipeDtoList.add(randomRecipe);
-        recipeDtoList.add(randomRecommendRecipe);
+        if(randomRecipe != null) {
+            recipeDtoList.add(randomRecipe);
+        }
+
+        if(randomRecommendRecipe != null) {
+            recipeDtoList.add(randomRecommendRecipe);
+        }
+        log.info("recipeList = {}", recipeDtoList);
 
         for(int i = 0 ; i < recipeDtoList.size() ; i++) {
             recipeDtoList.get(i).setRecipeImageUrl(IMAGE_URL + recipeDtoList.get(i).getRecipeImageUrl());
